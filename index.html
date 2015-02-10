@@ -1,0 +1,862 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <meta name="description" content="Сайт-резюме Димы Стребуля" />
+    <meta name="Keywords" content="Программист, .Net, Стребуль, Дима, Резюме" />
+    <meta name='wmail-verification' content='b0f8bd7c1789f3c8' />
+
+
+    <script src="./files/jquery.min.js" type="text/javascript"></script>
+    <script src="./files/ga.js" type="text/javascript"></script>
+    <script src="./files/printer.js" type="text/javascript"></script>
+    <link rel="shortcut icon" href="./files/logo.gif" type="image/gif">
+    <title>Strebul Dima</title>
+
+
+
+    <script type="text/javascript">
+        $(function () {
+            printer({
+                selector: '#printer',
+                text: "&nbsp;Здравствуйте, дорогие рекрутеры, ит-специалисты, а так же все, заинтересованные поиском Junior .NET разработчика в свою компанию, товарищи." +
+                    "<br /><br />&nbsp;В матрице был создан новый экземпляр разработчика и мы рады представить Вам новую версию Junior .NET разработчика программного обеспечения,<span style='font-weight:bold;'> " +
+                    "Junior 1.1</span>, улучшенную и дополненную.<br /><br /> <span style='font-weight:bold;'>&nbsp;Junior 1.1</span> отличается от предшественников массой улучшений, с которыми " +
+                    "вы можете ознакомиться дальше.",
+                fSuccess: function () {
+                    var str = $('#printer').html(),
+                        flag = false,
+                        iId;
+
+                    iId = setInterval(function () {
+                        flag = !flag;
+                        $('#printer').html(str + (flag ? "  <a href='#' onclick='showPage(\"featuresPage\");'>FEATURES</a>  " : ''));
+                    }, 500);
+
+                    setTimeout(function () {
+                        clearInterval(iId);
+                    }, 10 * 1000);
+                }
+            });
+        });
+
+
+        $(document).ready(function () {
+
+            var s = window.screen;
+            var width = q.width = 1920;
+            var height = q.height = 1080;
+            var yPositions = Array(300).join(0).split('');
+            var ctx = q.getContext('2d');
+
+            var draw = function () {
+                ctx.fillStyle = 'rgba(0,0,0,.08)';
+                ctx.fillRect(0, 0, width, height);
+                ctx.fillStyle = '#0F0';
+                ctx.font = '12pt Georgia';
+                yPositions.map(function (y, index) {
+                    text = String.fromCharCode(1e2 + Math.random() * 33);
+                    x = (index * 12) + 12;
+                    q.getContext('2d').fillText(text, x, y);
+                    if (y > 200 + Math.random() * 1e4) {
+                        yPositions[index] = 0;
+                    }
+                    else {
+                        yPositions[index] = y + 12;
+                    }
+                });
+            };
+
+            RunMatrix();
+            function RunMatrix() {
+                if (typeof Game_Interval != "undefined") clearInterval(Game_Interval);
+                Game_Interval = setInterval(draw, 60);
+            }
+
+            showFirstPage();
+            theRotator();
+            theRotator2();
+            document.getElementById("matrixAudio").volume = 0.4;
+
+
+
+        })
+
+        function theRotator() {
+            // Устанавливаем прозрачность всех картинок в 0
+            $('div#rotator ul li').css({ opacity: 0.0 });
+
+
+            // Берем первую картинку и показываем ее (по пути включаем полную видимость)
+            $('div#rotator ul li:first').css({ opacity: 1.0 });
+
+
+            // Вызываем функцию rotate для запуска слайдшоу, 5000 = смена картинок происходит раз в 5 секунд
+            setInterval('rotate()', 5000);
+        }
+        var int2;
+        function theRotator2() {
+            $('div#projRotator ul li').css({ opacity: 0.0 });
+            $('div#projRotator ul li:first').css({ opacity: 1.0 });
+            int2 = setInterval('rotate2()', 10000);
+
+        }
+
+        function nextprj() {
+            clearInterval(int2);
+            rotate2();
+            int2 = setInterval('rotate2()', 10000);
+        }
+
+        function prevprj() {
+            clearInterval(int2);
+            // Берем первую картинку
+            var current = ($('div#projRotator ul li.show') ? $('div#projRotator ul li.show') : $('div#projRotator ul li:first'));
+
+            // Берем следующую картинку, когда дойдем до последней начинаем с начала
+            var next = ((current.prev().length) ? ((current.prev().hasClass('show')) ? $('div#projRotator ul li:last') : current.prev()) : $('div#projRotator ul li:last'));
+
+            // чтобы показвать картинки в случайном порядке
+            //var sibs = current.siblings();
+            //var rndNum = Math.floor(Math.random() * sibs.length );
+            //var next = $( sibs[ rndNum ] );
+
+            // Подключаем эффект растворения/затухания для показа картинок, css-класс show имеет больший z-index
+            next.css({ opacity: 0.0 })
+            .addClass('show')
+            .animate({ opacity: 1.0 }, 1000);
+
+            // Прячем текущую картинку
+            current.animate({ opacity: 0.0 }, 1000)
+            .removeClass('show');
+            int2 = setInterval('rotate2()', 10000);
+        }
+
+        function rotate() {
+            // Берем первую картинку
+            var current = ($('div#rotator ul li.show') ? $('div#rotator ul li.show') : $('div#rotator ul li:first'));
+
+            // Берем следующую картинку, когда дойдем до последней начинаем с начала
+            var next = ((current.next().length) ? ((current.next().hasClass('show')) ? $('div#rotator ul li:first') : current.next()) : $('div#rotator ul li:first'));
+
+            // чтобы показвать картинки в случайном порядке
+            //var sibs = current.siblings();
+            //var rndNum = Math.floor(Math.random() * sibs.length );
+            //var next = $( sibs[ rndNum ] );
+
+            // Подключаем эффект растворения/затухания для показа картинок, css-класс show имеет больший z-index
+            next.css({ opacity: 0.0 })
+            .addClass('show')
+            .animate({ opacity: 1.0 }, 1000);
+
+            // Прячем текущую картинку
+            current.animate({ opacity: 0.0 }, 1000)
+            .removeClass('show');
+        };
+
+        function rotate2() {
+            // Берем первую картинку
+            var current = ($('div#projRotator ul li.show') ? $('div#projRotator ul li.show') : $('div#projRotator ul li:first'));
+
+            // Берем следующую картинку, когда дойдем до последней начинаем с начала
+            var next = ((current.next().length) ? ((current.next().hasClass('show')) ? $('div#projRotator ul li:first') : current.next()) : $('div#projRotator ul li:first'));
+
+            // чтобы показвать картинки в случайном порядке
+            //var sibs = current.siblings();
+            //var rndNum = Math.floor(Math.random() * sibs.length );
+            //var next = $( sibs[ rndNum ] );
+
+            // Подключаем эффект растворения/затухания для показа картинок, css-класс show имеет больший z-index
+            next.css({ opacity: 0.0 })
+            .addClass('show')
+            .animate({ opacity: 1.0 }, 1000);
+
+            // Прячем текущую картинку
+            current.animate({ opacity: 0.0 }, 1000)
+            .removeClass('show');
+        };
+
+        function showPage(page) {
+            document.getElementById("closer").style.top = "0px";
+            document.getElementById("closer").style.bottom = "auto"; 
+            document.getElementById("closer").style.height = "600px";
+            document.getElementById("mainPage").style.opacity = 0.5;
+            setTimeout(
+                            function () {
+                                document.getElementById("closer").style.top = "auto";
+                                document.getElementById("closer").style.bottom = "0px";
+                                document.getElementById("closer").style.height = "0px";
+
+
+
+                                document.getElementById("aboutMePage").style.display = "none";
+                                document.getElementById("featuresPage").style.display = "none";
+                                document.getElementById("projectsPage").style.display = "none";
+                                document.getElementById("contactsPage").style.display = "none";
+                                document.getElementById("mainPage").style.opacity = 1;
+                                document.getElementById(page).style.display = "block";
+
+                            }
+                            , 1000);
+
+
+
+        }
+
+        function showFirstPage() {
+            document.getElementById("aboutMePage").style.display = "block";
+            document.getElementById("closer").style.height = "0px";
+
+        }
+
+
+    </script>
+    <style type="text/css">
+        #printer a {
+            color: green;
+            float: right;
+            font-size: 20pt;
+            padding: 15px;
+        }
+
+            #printer a:visited {
+                color: green;
+            }
+
+        .infoTable {
+            font: bold 16pt MATRIX_small;
+            color: green;
+        }
+
+            .infoTable tr td {
+                text-align: left;
+                padding: 10px;
+            }
+
+                .infoTable tr td a {
+                    color: green;
+                }
+
+                    .infoTable tr td a:visited {
+                        color: green;
+                    }
+
+                .infoTable tr td + td {
+                    /*text-align:left;*/
+                }
+
+        #rotator ul {
+            list-style-type: none;
+            margin: 0px;
+            padding: 5px;
+        }
+
+            #rotator ul li {
+                float: left;
+                position: absolute;
+            }
+
+                #rotator ul li img {
+                    width: 190px;
+                }
+
+                #rotator ul li.show {
+                    z-index: 500;
+                }
+
+        #projRotator {
+            width: 750px;
+            height: 450px;
+            margin: 5px;
+            border-color: green;
+            border-width: 2px;
+            border-style: solid;
+            position: absolute;
+            left: 50%;
+            margin-left: -375px;
+        }
+
+        #projectsPage a {
+            color: green;
+            font-family: Matrix_small;
+        }
+
+            #projectsPage a:visited {
+                color: green;
+            }
+
+            #projectsPage a:hover {
+                color: #00ff00;
+            }
+
+        #projRotator ul {
+            list-style-type: none;
+            margin: 0px;
+            padding: 5px;
+        }
+
+            #projRotator ul li {
+                float: left;
+                position: absolute;
+            }
+
+                #projRotator ul li p {
+                }
+
+                    #projRotator ul li p span {
+                        font-size: larger;
+                        font-weight: bolder;
+                    }
+
+                    #projRotator ul li p a {
+                        color: green;
+                    }
+
+                        #projRotator ul li p a:hover {
+                            color: green;
+                        }
+
+                        #projRotator ul li p a:visited {
+                            color: green;
+                        }
+
+                #projRotator ul li img {
+                    width: 100%;
+                    height: 440px;
+                }
+
+                #projRotator ul li.show {
+                    z-index: 500;
+                }
+
+
+        @font-face {
+            font-family: Matrix; /* Гарнитура шрифта */
+            src: url(files/MATRIX2.ttf); /* Путь к файлу со шрифтом */
+        }
+
+        @font-face {
+            font-family: Matrix_small; /* Гарнитура шрифта */
+            src: url(files/MATRIX.ttf); /* Путь к файлу со шрифтом */
+        }
+
+
+        body {
+            border: 0px;
+            padding: 0px;
+            margin: 0px;
+            overflow: hidden;
+            cursor: url(./files/arrow.cur), pointer;
+        }
+
+        a {
+            cursor: url(./files/hand.cur), pointer;
+        }
+
+
+        .rootDiv {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            background-color: black;
+            overflow: hidden;
+            z-index: 2;
+        }
+
+        .navigationDiv {
+            opacity: 0.9;
+        }
+
+        .navigationUl {
+            background-color: black;
+            font-size: 0;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            width: 100%;
+        }
+
+            .navigationUl li {
+                display: inline-block;
+                margin: 0;
+                padding: 0;
+                position: relative;
+                min-width: 25%;
+            }
+
+            .navigationUl a {
+                background: black;
+                color: #00dd00;
+                display: block;
+                font: bold 30px Matrix;
+                padding: 5px 10px;
+                text-align: center;
+                text-decoration: none;
+                -webkit-transition: all .25s ease;
+                -moz-transition: all .25s ease;
+                -ms-transition: all .25s ease;
+                -o-transition: all .25s ease;
+                transition: all .25s ease;
+            }
+
+            .navigationUl li:hover a {
+                background: green;
+                color: black;
+            }
+
+        .matrixDiv {
+            position: absolute;
+            height: 100%;
+            width: 100%;
+            opacity: 0.9;
+        }
+
+
+        .mainPage {
+            width: 1000px;
+            height: 600px;
+            position: absolute;
+            top: 100px;
+            border: 5px solid #00ee00;
+            background-color: black;
+            left: 50%;
+            margin-left: -500px;
+            top: 50%;
+            margin-top: -280px;
+            opacity: 1;
+            outline: 2px solid #006600;
+            transition: opacity 1s;
+        }
+
+        .info {
+            width: 100%;
+            height: 100%;
+            display: none;
+            color: green;
+        }
+
+        #closer {
+            width: 100%;
+            height: 600px;
+            background-color: black;
+            top: 0px;
+            display: block;
+            position: absolute;
+            transition: height 1s;
+            opacity: 1;
+            z-index: 999;
+        }
+
+        #blink1 {
+            -webkit-animation: blink1 3s linear infinite;
+            animation: blink1 3s linear infinite;
+        }
+
+        @-webkit-keyframes blink1 {
+            0% {
+                color: rgba(255, 0, 0, 1);
+            }
+
+            50% {
+                color: rgba(255, 0, 0, 0.2);
+            }
+
+            100% {
+                color: rgba(255, 0,0, 1);
+            }
+        }
+
+        @keyframes blink1 {
+            0% {
+                color: rgba(255, 0, 0, 1);
+            }
+
+            50% {
+                color: rgba(255, 0, 0, 0.2);
+            }
+
+            100% {
+                color: rgba(255, 0,0, 1);
+            }
+        }
+
+        .mainText {
+            font-family: Courier New, Courier, monospace;
+            font-size: 16pt;
+            margin: 0 auto;
+            padding: 10px;
+            color: #00ff00;
+        }
+
+        .printer-hl1 {
+            color: #77ff00;
+        }
+
+        .printer-hl2 {
+            color: #ddff00;
+            font-weight: bold;
+        }
+
+        #featuresPage {
+            overflow-y: scroll;
+            scrollbar-base-color: green;
+            font-family: Courier New, Courier, monospace;
+            color: #00ff00;
+            transition: opacity 0.5s;
+        }
+
+        ::-webkit-scrollbar {
+            width: 12px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            border-width: 1px 1px 1px 2px;
+            border-color: #555;
+            background-color: #777;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            border-width: 1px 1px 1px 2px;
+            border-color: #777;
+            background-color: #00dd00;
+        }
+
+        #featuresPage ul li {
+            scrollbar-base-color: green;
+            padding: 10px 0px;
+        }
+
+
+
+        .info {
+            background-image: url("./files/img/morpheus.gif");
+            background-size: contain;
+        }
+
+        #contactsPage table {
+            font: bold 20pt Matrix_small;
+            color: #00AA00;
+            display: block;
+            position: absolute;
+            width: 500px;
+            left: 50%;
+            margin-left: -200px;
+            margin-top: 50px;
+        }
+
+            #contactsPage table tr td {
+                padding: 20px;
+                margin: 20px;
+            }
+
+                #contactsPage table tr td a {
+                    color: #00EE00;
+                }
+
+                    #contactsPage table tr td a:hover {
+                        color: #00EE00;
+                    }
+
+                    #contactsPage table tr td a:visited {
+                        color: #00EE00;
+                    }
+
+        #audio {
+            position: absolute;
+            bottom: 0px;
+            right: 0px;
+            opacity: 0.08;
+            transition: opacity 0.5s;
+        }
+
+            #audio:hover {
+                opacity: 0.8;
+            }
+    </style>
+
+</head>
+<body>
+    <div class="rootDiv">
+        <div class="matrixDiv"> <canvas class="matrixCanvas" id="q"></canvas></div>
+
+        <div class="navigationDiv">
+            <ul class="navigationUl">
+                <li><a href="#" onclick="showPage('aboutMePage');">ABOUT ME</a></li>
+                <li><a href="#" onclick="showPage('featuresPage');">FEATURES</a></li>
+                <li><a href="#" onclick="showPage('projectsPage');">PROJECTS</a></li>
+                <li><a href="#" onclick="showPage('contactsPage');">CONTACTS</a></li>
+
+            </ul>
+
+        </div>
+
+        <div class="mainPage" id="mainPage">
+
+            <div id="aboutMePage" class="info">
+
+                <div style="position:absolute; right:0px; top:0px; width: 220px; height:100%;">
+                    <!--<img id="myPhoto" src="./files/img/1.jpg" style=" width:200px; margin:5px; float:right; border-color:green; border-width:2px; border-style:solid;"/>-->
+                    <div id="rotator" style=" width:200px; height:250px; margin:5px; float:right; border-color:green; border-width:2px; border-style:solid;">
+                        <ul>
+                            <li class="show"> <img id="myPhoto" src="./files/img/1.jpg"> </li>
+                            <li>            <img id="myPhoto" src="./files/img/1_1.jpg">   </li>
+                            <li>            <img id="myPhoto" src="./files/img/2.jpg">   </li>
+                            <li>            <img id="myPhoto" src="./files/img/2_1.jpg">   </li>
+                            <li>             <img id="myPhoto" src="./files/img/3.jpg">  </li>
+                            <li>             <img id="myPhoto" src="./files/img/3_1.jpg">  </li>
+                            <li>            <img id="myPhoto" src="./files/img/4.jpg">   </li>
+                            <li>            <img id="myPhoto" src="./files/img/4_1.jpg">   </li>
+                            <li>             <img id="myPhoto" src="./files/img/5.jpg">  </li>
+                            <li>             <img id="myPhoto" src="./files/img/5_1.jpg">  </li>
+                            <li>            <img id="myPhoto" src="./files/img/6.jpg">   </li>
+                            <li>            <img id="myPhoto" src="./files/img/6_1.jpg">   </li>
+
+                        </ul>
+                    </div>
+
+                    <table class="infoTable">
+                        <tr>
+                            <td>Age:</td>
+                            <td>23</td>
+                        </tr>
+                        <tr>
+                            <td>Sex:</td>
+                            <td>Male</td>
+                        </tr>
+                        <tr>
+                            <td>Country:</td>
+                            <td>Ukraine</td>
+                        </tr>
+                        <tr>
+                            <td>City:</td>
+                            <td>Kyiv</td>
+                        </tr>
+                        <tr>
+                            <td>Level:</td>
+                            <td>Junior</td>
+                        </tr>
+                        <tr>
+                            <td>Available:</td>
+                            <td><span id="blink1">YES</span></td>
+                        </tr>
+                        <tr><td></td></tr>
+                        <tr>
+                            <td colspan="2" style="text-align:right;">
+                                <a href="#" onclick="showPage('contactsPage');">Go to contacts</a>
+                            </td>
+                        </tr>
+
+                    </table>
+                </div>
+
+                <div style="position:absolute;display:block; top:0; margin:5px; padding:5px; left:0px; width:770px; ">
+                    <p style="text-align: center;">
+                        <span style="font-size:xx-large;">Welcome to </span>  <span style=" font-family:Matrix; font-weight:bold; font-size:xx-large;">MATRIX</span>
+                    </p>
+
+
+                    <p id="printer" class="mainText"><span class="printer-hl1">u</span><span class="printer-hl2">s</span></p>
+
+
+
+                </div>
+
+
+            </div>
+
+            <div id="featuresPage" class="info">
+                <ul style="list-style-type:square; font-size:larger; padding:0px 10px 10px 40px;">
+                    <li>
+                        <b>Programming skills.</b> <br />&nbsp;Первым и наиболее важным обновлением является импорт в мозг разработчика следующих навыков:
+                        <ol>
+                            <li>Разработка ПО на платформе .net, включая WinForms и WPF приложения;</li>
+                            <li>Базовые навыки разработки веб приложений с помощью технологий asp.net и MVC;</li>
+                            <li>Разработка БД в среде MS Sql, а так же работа с базами из .net приложений;</li>
+                            <li>Создание веб страниц, с использованием HTML, CSS и Javascript.</li>
+                            <li>Прочие навыки, в большом количестве, но абсолютно незначительны для Вас, скорей всего.</li>
+
+                        </ol>
+                    </li>
+                    <li>
+                        <b> Расширенные границы эрудиции. </b><br /> &nbsp;Помимо записанных в ПЗУ данных о разработке,
+                        имеется большое количество информации и общих знаний в самых разных направлениях: от ботаники до астрономии.
+                        Данное улучшение позволяет новой версии решать задачи самого разного направления без привлечения дополнительных ресурсов и специалистов.
+                    </li>
+                    <li>
+                        <b>
+                            Встроенный модуль самообучения
+                        </b><br />&nbsp; При наблюдении за моделями предыдущего поколения, был выявлен недостаток,
+                        заключающийся в отсутствии желания учиться и развиваться, внесенные на этапе обучения в ВУЗе данные находились в режиме read-only,
+                        что приводило к проблемам с записью новых данных в программиста. С встроенным модулем самообучения эти проблемы больше не возникают.
+                        Данный экземпляр склонен к самостоятельному обучению и развитию, особенно в области разработки ПО.
+                        Модуль был протестирован на курсах Microsoft Virtual Academy и ITVDN от Cyberbionics,
+                        где показал высокий уровень усвоения информации и адаптации к полученным знаниям.
+                    </li>
+                    <li>
+                        <b>Повышен показатель работоспособности.</b><br />
+                        &nbsp; В связи с необходимостью выполнять задачи в сжатые сроки а так же случаями внезапно наступивших дедлайнов,
+                        был успешно повышен показатель работоспособности, ответственности и самоотдачи.
+                        В результате удалось добиться возможности активировать такие режимы работы, как «overtime working» и
+                        «Homework night tasks» за небольшую компенсацию печеньками и кофе. При этом удалось добиться стабильной работы с аптаймом 99%.
+                        Тестирования выносливости проводилось не только при работе за компьютером, но и эксплуатацией модели на рыбном заводе на Аляске,
+                        где ежедневно в течении 3 месяцев модель подвергалась 16-18 часовому рабочему дню при высоких физических нагрузках.
+                        Физических и психологических повреждений не выявлено.
+                    </li>
+                    <li>
+                        <b>Улучшены силовые показатели.</b><br />
+                        &nbsp;В связи с активацией модуля саморазвития для тестирования несколько лет назад,
+                        данная модель начала неконтролируемое развитие в разных направлениях,
+                        включая разные виды спорта: культуризм, сноубординг, мото-велоспорт etc.
+                        На первый взгляд, это может показаться не столь важным пунктом, однако никто не знает,
+                        когда может пригодиться перенести стол или серверную в другое помещение.
+                        Бонусом служит биологический организм, с практически неуязвимым иммунитетом,
+                        что бывает важно для продолжительной работы над проектом без больничных.
+                    </li>
+                    <li>
+                        <b>Патч внешнего вида.</b>
+                        <br />
+                        &nbsp;В новой версии применен патч, запрещающий приходить в свитере, рваных джинсах, и грязных ботинках.
+                        Такое исправление позволяет брать разработчика на митинги с заказчиками или вышестоящим начальством.
+                    </li>
+                    <li><b>Bug fix and stability improvements.</b></li>
+                </ul>
+
+            </div>
+
+
+            <div id="projectsPage" class="info" style="overflow-y:scroll;">
+
+                <div id="projRotator">
+                    <ul>
+                        <li class="show">
+                            <img id="myPhoto" src="./files/prj/1.jpg">
+                            <p><span>Vk Music</span></p>
+                            <p><b> WPF приложение.</b><br />Онлайн плеер и загрузчик песен из популярной соц. сети. Работа с API Вконтакта, протоколами http, ассинхронной загрузкой файлов и т.д. </p>
+                        </li>
+                        <li>
+                            <img id="myPhoto" src="./files/prj/2.jpg">
+                            <p><span>TP Control</span>  </p>
+                            <p><b>Desktop (WinForm) </b><br />Графический редактор, с использованием специализированных контролов для создания интерфейса сенсорной панели.  </p>
+                        </li>
+                        <li>
+                            <img id="myPhoto" src="./files/prj/3.jpg">
+                            <p><span>Щелевая съемка</span>  </p>
+                            <p><b>Desktop (WinForm) </b><br /> Алгоритм обработки видео, имитирующий щелевую съемку, идея взята с статьи <a href="http://habrahabr.ru/post/154911/" target="_blank">habrahabr'a</a></p>
+                        </li>
+                        <li>
+                            <img id="myPhoto" src="./files/prj/4.jpg">
+                            <p><span>Таблицы Шульте</span>  </p>
+                            <p><b>Веб-страница(html,css,javascript)</b><br />Простая анимированная игра на развитие бокового зрения. </p>
+                        </li>
+                        <li>
+                            <img id="myPhoto" src="./files/prj/5.jpg">
+                            <p><span>Монитор фаловой системы</span>  </p>
+                            <p><b>Desktop (WinForm) </b><br />Приложение, позволяющее создавать "наблюдателей" за выбранными папками в фаловой системе. Асинхронная работа, работа с файловой системой, логгированием и т.д.</p>
+                        </li>
+                        <li>
+                            <img id="myPhoto" src="./files/prj/6.jpg">
+                            <p><span>Редактор фотографий</span>  </p>
+                            <p>
+                                <b>Desktop (WinForm) </b><br />Приложение, основной целью которого является применение <b>собственных</b> алгоритмов обработки фото,
+                                таких как, автоконтраст, HDR, пикселизация, формирование гистограммы и т.д.
+                            </p>
+                        </li>
+                        <li>
+                            <img id="myPhoto" src="./files/prj/7.jpg">
+                            <p><span>Формирование фото из видео</span>  </p>
+                            <p>
+                                <b>Desktop (WinForm) </b><br />
+                                Программа, генерирующая фото из видео, имитирующее фото с длительной выдержкой.
+                                Даёт возможность создать тайм-лепс фото на устройствах, не поддерживающих такой функционал, через съемку обычного видео.
+                                Работа с библеотеками Aforge, FFMPEG, DirectShow.
+                            </p>
+                        </li>
+
+                    </ul>
+
+                </div>
+                <a href="#" style="float:left;" onclick="prevprj()">Previous Project</a>
+                <a href="#" style="float:right;" onclick="nextprj()">Next Project</a>
+
+
+
+            </div>
+            <div id="contactsPage" class="info">
+                <!--<img src="./files/img/morpheus.gif" />-->
+
+                <table>
+                    <tr>
+                        <td>
+                            Email:
+                        </td>
+                        <td>
+                            <a href="mailto:deadik@gmail.com">deadik@gmail.com</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Phone:
+                        </td>
+                        <td>
+                            (093) 113-74-19
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            Skype:
+                        </td>
+                        <td>
+                            <a href="skype:dimadod?chat">dimadod</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            VK:
+                        </td>
+                        <td>
+                            <a href="http://vk.com/l__l_l_l__l" target="_blank">Dima Strebul</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Viber:
+                        </td>
+                        <td>
+                            (093) 113-74-19
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" style="font-size:12pt;">
+                            <pre>
+                            - Доктор, у меня провалы в памяти.
+                            - И как часто?
+                            - Что часто?
+                            - Провалы.
+                            - Какие провалы?</pre>
+                        </td>
+                    </tr>
+                </table>
+
+
+            </div>
+            <div id="closer"></div>
+        </div>
+
+        <!--<img src="./files/img/in.gif" style="width:300px; height:100px; position:absolute; bottom:0px; left:50%; margin-left:-150px; opacity:0.1; z-index:1; " />-->
+        <div id="audio">
+            <audio id="matrixAudio" src="./files/matrix.mp3" autoplay loop controls>
+                <source src="./files/matrix.mp3">
+
+            </audio>
+        </div>
+    </div>
+
+</body>
+</html>
