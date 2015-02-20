@@ -2,6 +2,7 @@
 
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
+    <meta name="google-site-verification" content="UklDkVF3UGBliZsPciMp5YFyML6pyPsmAftMucFsxtc" />
     <meta charset="utf-8" />
     <meta name="description" content="Сайт-резюме Димы Стребуля" />
     <meta name="Keywords" content="Программист, .Net, Стребуль, Дима, Резюме" />
@@ -345,8 +346,10 @@
             border: 0px;
             padding: 0px;
             margin: 0px;
-            overflow: hidden;
+            overflow: auto;
             cursor: url(./files/arrow.cur), pointer;
+            min-height:650px;
+            min-width:1024px;
         }
 
         a {
@@ -361,10 +364,16 @@
             background-color: black;
             overflow: hidden;
             z-index: 2;
+             min-height:660px;
+            min-width:1024px;
         }
 
         .navigationDiv {
             opacity: 0.9;
+            z-index:99999;
+            width:100%;
+            position:fixed;
+            min-width:1000px;
         }
 
         .navigationUl {
@@ -372,9 +381,11 @@
             font-size: 0;
             list-style: none;
             margin: 0;
+            
             padding: 0;
             text-align: center;
             width: 100%;
+            
         }
 
             .navigationUl li {
@@ -417,7 +428,7 @@
             width: 1000px;
             height: 600px;
             position: absolute;
-            top: 100px;
+            
             border: 5px solid #00ee00;
             background-color: black;
             left: 50%;
