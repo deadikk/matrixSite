@@ -37,7 +37,7 @@
                 selector: '#printer',
                 text: "&nbsp;Здравствуйте, дорогие рекрутеры, ит-специалисты и все, заинтересованные поиском Junior .NET разработчика в свою компанию, товарищи." +
                     "<br /><br />&nbsp;В матрице был создан новый экземпляр разработчика и мы рады представить Вам новую версию Junior .NET разработчика программного обеспечения,<span style='font-weight:bold;'> " +
-                    "Junior 1.1</span>, улучшенную и дополненную.<br /><br /> <span style='font-weight:bold;'>&nbsp;Junior 1.1</span> отличается от предшественников массой улучшений, с которыми " +
+                    "Junior 1.2</span>, улучшенную и дополненную.<br /><br /> <span style='font-weight:bold;'>&nbsp;Junior 1.2</span> отличается от предшественников массой улучшений, с которыми " +
                     "вы можете ознакомиться дальше.",
                 fSuccess: function () {
                     var str = $('#printer').html(),
@@ -59,20 +59,21 @@
 
         $(document).ready(function () {
 
-            var s = window.screen;
-            var width = q.width = 1920;
-            var height = q.height = 1080;
+            
+            var width = q.width = qBck.width = 1920;
+            var height = q.height = qBck.height = 1080;
             var yPositions = Array(300).join(0).split('');
             var ctx = q.getContext('2d');
-
+            var op = Math.random() * (0.1 - 0.05) + 0.05;
             var draw = function () {
-                ctx.fillStyle = 'rgba(0,0,0,.08)';
+                
+                ctx.fillStyle = 'rgba(0,0,0,'+op+')';
                 ctx.fillRect(0, 0, width, height);
                 ctx.fillStyle = '#0F0';
                 ctx.font = 'bold 10pt Georgia ';
                 yPositions.map(function (y, index) {
                     text = String.fromCharCode(12448 + Math.random() * 89);
-                    x = (index * 16) + 12;
+                    x = (index * 12) + 12;
                     q.getContext('2d').fillText(text, x, y);
                     if (y > 200 + Math.random() * 1e4) {
                         yPositions[index] = 0;
@@ -87,6 +88,35 @@
             function RunMatrix() {
                 if (typeof Game_Interval != "undefined") clearInterval(Game_Interval);
                 Game_Interval = setInterval(draw, 60);
+            }
+
+
+            var yPositionsBck = Array(300).join(0).split('');
+            var ctxBck = qBck.getContext('2d');
+            var opBck = Math.random() * (0.1 - 0.05) + 0.05;
+            var drawBck = function () {
+                
+                ctxBck.fillStyle = 'rgba(0,0,0,'+opBck+')';
+                ctxBck.fillRect(0, 0, width, height);
+                ctxBck.fillStyle = '#0F0';
+                ctxBck.font = 'normal 8pt Georgia ';
+                yPositionsBck.map(function (yBck, indexBck) {
+                    textBck = String.fromCharCode(12448 + Math.random() * 89);
+                    xBck = (indexBck * 12) + 12;
+                    qBck.getContext('2d').fillText(textBck, xBck, yBck);
+                    if (yBck > 200 + Math.random() * 1e4) {
+                        yPositionsBck[indexBck] = 0;
+                    }
+                    else {
+                        yPositionsBck[indexBck] = yBck + 14;
+                    }
+                });
+            };
+
+            RunMatrixBck();
+            function RunMatrixBck() {
+                if (typeof Game_IntervalBck != "undefined") clearInterval(Game_IntervalBck);
+                Game_IntervalBck = setInterval(drawBck, 60);
             }
 
             showFirstPage();
@@ -109,6 +139,7 @@
 
             // Вызываем функцию rotate для запуска слайдшоу, 5000 = смена картинок происходит раз в 5 секунд
             setInterval('rotate()', 5000);
+           
         }
         var int2;
         function theRotator2() {
@@ -148,6 +179,7 @@
             int2 = setInterval('rotate2()', 10000);
         }
 
+       
         function rotate() {
             // Берем первую картинку
             var current = ($('div#rotator ul li.show') ? $('div#rotator ul li.show') : $('div#rotator ul li:first'));
@@ -211,12 +243,16 @@
                                 document.getElementById("contactsPage").style.display = "none";
                                 document.getElementById("mainPage").style.opacity = 1;
                                 document.getElementById(page).style.display = "block";
-
+                               
                             }
                             , 1000);
 
+            
 
-
+        }
+        function hidePage() {           
+            document.getElementById("mainPage").style.display = "none";
+            document.getElementById("navigationDiv").style.display = "none";
         }
 
         function showFirstPage() {
@@ -229,6 +265,7 @@
     </script>
     <style type="text/css">
         #printer a {
+            
             color: green;
             float: right;
             font-size: 20pt;
@@ -265,6 +302,7 @@
             list-style-type: none;
             margin: 0px;
             padding: 5px;
+            
         }
 
             #rotator ul li {
@@ -348,12 +386,12 @@
 
 
         @font-face {
-            font-family: Matrix; /* Гарнитура шрифта */
+            font-family: Matrix; /* �&#8219;арнитура шрифта */
             src: url(files/MATRIX2.ttf); /* Путь к файлу со шрифтом */
         }
 
         @font-face {
-            font-family: Matrix_small; /* Гарнитура шрифта */
+            font-family: Matrix_small; /* �&#8219;арнитура шрифта */
             src: url(files/MATRIX.ttf); /* Путь к файлу со шрифтом */
         }
 
@@ -439,7 +477,14 @@
             position: absolute;
             height: 100%;
             width: 100%;
-            opacity: 0.9;
+            opacity: 0.7;
+        }
+
+        .matrixDivBck {
+            position: absolute;
+            height: 100%;
+            width: 100%;
+            opacity: 1;
         }
 
 
@@ -603,19 +648,51 @@
             #audio:hover {
                 opacity: 0.8;
             }
+
+            .blinkingStyle{
+                animation-duration: 1000ms;
+                animation-name: blinkTheBorder;
+                animation-iteration-count: infinite;
+                animation-direction:normal;
+                color:black;
+                font-weight:bold;
+              
+            }
+
+            @keyframes blinkTheBorder {
+
+              0% {
+                 text-shadow: white 1px 1px 1px, white -1px -1px 1px, white -1px 1px 1px, white 1px -1px 1px;
+              }   
+             
+                           
+
+              80% {
+               text-shadow: red 1px 1px 1px, red -1px -1px 1px, red -1px 1px 1px, red 1px -1px 1px;
+              }     
+
+                
+              
+              
+            }
+
     </style>
 
 </head>
 <body>
     <div class="rootDiv">
+        <div class="matrixDivBck"> <canvas class="matrixCanvasBck" id="qBck"></canvas></div>
         <div class="matrixDiv"> <canvas class="matrixCanvas" id="q"></canvas></div>
+        
 
-        <div class="navigationDiv">
+        <div class="navigationDiv" id="navigationDiv">
             <ul class="navigationUl">
                 <li><a href="#" onclick="showPage('aboutMePage');">ABOUT ME</a></li>
                 <li><a href="#" onclick="showPage('featuresPage');">FEATURES</a></li>
                 <li><a href="#" onclick="showPage('projectsPage');">PROJECTS</a></li>
                 <li><a href="#" onclick="showPage('contactsPage');">CONTACTS</a></li>
+                
+                
 
             </ul>
 
@@ -700,6 +777,7 @@
                     <li>
                         <b>Programming skills.</b> <br />&nbsp;Первым и наиболее важным обновлением является импорт в мозг разработчика следующих навыков:
                         <ol>
+                            <li><span class="blinkingStyle">NEW SKILL:</span>&nbsp;SalesForce development(apex/VisualForce/Force.com)</li>
                             <li>Разработка ПО на платформе .net, включая WinForms и WPF приложения;</li>
                             <li>Базовые навыки разработки веб приложений с помощью технологий asp.net и MVC;</li>
                             <li>Разработка БД в среде MS Sql, а так же работа с базами из .net приложений;</li>
@@ -803,6 +881,17 @@
                             </p>
                         </li>
 
+			<li>
+                            <img id="myPhoto" src="./files/prj/8.jpg">
+                            <p><span>Платформа для программы лояльности</span>  </p>
+                            <p>
+                                <b>Cloud development (Salesforce) </b><br />
+                                Приложение для AppExchange на платформе Salesforce, предоставляющее возможность пользователям, установившим приложение,
+				создавать, контролировать и модифицировать программы лояльности в своей компании. Используются страницы Visualforce с управлением apex-контроллерами,
+				и автоматизацией процессов с помощью триггеров.
+                            </p>
+                        </li>
+
                     </ul>
 
                 </div>
@@ -868,17 +957,16 @@
 
                     
                     <tr>
-                        <td colspan="2" style="font-size:10pt;">
-                            <pre>
-                            - Доктор, у меня провалы в памяти.
-                            - И как часто?
-                            - Что часто?
-                            - Провалы.
-                            - Какие провалы?</pre>
+                        <td colspan="1" style="font-size:10pt;">
+                            
+                        </td>
+                        <td>
+                            <a href="#" onclick="hidePage();" style="font-size:14px;">SCREENSAVER MODE</a>
+							
                         </td>
                     </tr>
                 </table>
-
+                
 
             </div>
             <div id="closer"></div>
