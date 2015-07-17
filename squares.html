@@ -1,0 +1,92 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script>
+        var moveSpeed = 15;
+        var addSpeed = 120 //squares per minute
+        var brightness = 16; // 1 - 16
+
+        var maxWidth = 100;
+        var minWidth = 50;
+
+        var x;
+        var y;
+
+        var maxNumberOfElements = 100;
+
+        $(function () {
+
+            var elems = $("div div");
+            var arr = $.makeArray(elems);
+
+
+            setInterval(function () {
+
+                $.each(arr, function () {
+
+                    if (Math.random() >= 0.5) {
+                        $(this).animate({
+                            left: getRandomInt(0, x - $(this).width()) + 'px'
+                        }, 10000 / moveSpeed);
+                    }
+                    else {
+                        $(this).animate({
+                            top: getRandomInt(0, y - $(this).height()) + 'px'
+                        }, 10000 / moveSpeed);
+                    }
+                });
+
+            }
+            , 10000 / moveSpeed);
+
+
+
+
+            var size;
+            var adder = setInterval(function () {
+                size = getRandomInt(minWidth, maxWidth);
+                $(".mainDiv").append('<div style="position:absolute; height:' + size + 'px;width:' + size + 'px; background-color:' + getRandomColor() + ';left:' + getRandomInt(0, x - size) + 'px;top:' + getRandomInt(0, y - size) + 'px;"></div>');
+
+                elems = $("div div");
+                arr = $.makeArray(elems);
+
+
+                if (arr.length > maxNumberOfElements) {
+                    clearInterval(adder);
+                }
+            }
+            , 60000 / addSpeed);
+            setInterval(function () {
+                $(".mainDiv").css("background-color", getRandomColor());
+                x = $(".mainDiv").width();
+                y = $(".mainDiv").height();
+            }
+            , 60000 / addSpeed);
+        });
+
+        function getRandomColor() {
+            var letters = '0123456789ABCDEF'.split('');
+            var color = '#';
+            for (var i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * brightness)];
+            }
+            return color;
+        }
+
+        function getRandomInt(min, max) {
+            return Math.floor(Math.random() * (max - min)) + min;
+
+        }
+
+    </script>
+</head>
+<body style="overflow:hidden;margin:0;padding:0;">
+    <div style="width:100%; height:100%; position:absolute; overflow:hidden; margin:0;padding:0;" class="mainDiv">
+
+    </div>
+</body>
+</html>
