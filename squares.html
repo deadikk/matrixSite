@@ -6,25 +6,46 @@
     <title></title>
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
     <script>
-        var moveSpeed = 15;
-        var addSpeed = 120 //squares per minute
+        var moveSpeed = 20;
         var brightness = 16; // 1 - 16
-
         var maxWidth = 100;
         var minWidth = 50;
-
         var x;
         var y;
-
-        var maxNumberOfElements = 100;
+        var maxNumberOfElements = 40;
 
         $(function () {
 
             var elems = $("div div");
             var arr = $.makeArray(elems);
+            $("#speedMarker").text("Speed: " + moveSpeed);
+            var moving = setInterval(move, 10000 / moveSpeed);
+            var adder = setInterval(addSquare, 10000 / moveSpeed);
+            //var backChanger = setInterval(backChange, 10000 / moveSpeed);
 
 
-            setInterval(function () {
+            $(window).bind('mousewheel', function (e) {
+                clearInterval(moving);
+                clearInterval(adder);
+                //clearInterval(backChanger);
+                if (e.originalEvent.wheelDelta / 120 > 0) {
+                    if (moveSpeed < 49) moveSpeed++;
+                } else {
+                    if (moveSpeed > 2) moveSpeed--;
+                }
+                $("#speedMarker").text("Speed: " + moveSpeed);
+                moving = setInterval(move, 10000 / moveSpeed);
+                adder = setInterval(addSquare, 10000 / moveSpeed);
+                //backChanger = setInterval(backChange, 10000 / moveSpeed);
+
+            });
+
+
+
+
+            function move() {
+                x = $(".mainDiv").width();
+                y = $(".mainDiv").height();
 
                 $.each(arr, function () {
 
@@ -41,31 +62,26 @@
                 });
 
             }
-            , 10000 / moveSpeed);
+            function addSquare() {
+                if (arr.length > maxNumberOfElements) {
+                    clearInterval(adder);
+                    return;
+                }
 
-
-
-
-            var size;
-            var adder = setInterval(function () {
                 size = getRandomInt(minWidth, maxWidth);
                 $(".mainDiv").append('<div style="position:absolute; height:' + size + 'px;width:' + size + 'px; background-color:' + getRandomColor() + ';left:' + getRandomInt(0, x - size) + 'px;top:' + getRandomInt(0, y - size) + 'px;"></div>');
 
                 elems = $("div div");
-                arr = $.makeArray(elems);
-
-
-                if (arr.length > maxNumberOfElements) {
-                    clearInterval(adder);
-                }
+                arr = $.makeArray(elems);                
             }
-            , 60000 / addSpeed);
-            setInterval(function () {
+            function backChange() {
                 $(".mainDiv").css("background-color", getRandomColor());
-                x = $(".mainDiv").width();
-                y = $(".mainDiv").height();
+               
             }
-            , 60000 / addSpeed);
+
+            var size;
+           
+            
         });
 
         function getRandomColor() {
@@ -86,7 +102,7 @@
 </head>
 <body style="overflow:hidden;margin:0;padding:0;">
     <div style="width:100%; height:100%; position:absolute; overflow:hidden; margin:0;padding:0;" class="mainDiv">
-
+        <p style="color:black; font-weight:bold; font-family:'Microsoft New Tai Lue'; font-size:40px; opacity:0.5; padding:0;margin:0;" id="speedMarker" title="Use mouse wheel to change speed"></p>
     </div>
 </body>
 </html>
