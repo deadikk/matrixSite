@@ -52,6 +52,13 @@
                     }, 10 * 1000);
                 }
             });
+
+            $('#myAge').text(Math.floor((Date.now() - Date.parse('Oct 27,1991')) / 31536000000));
+            var myExpMonth = Math.floor((Date.now() - Date.parse('Oct 1,2013')) / 2628000000);
+            var myExpYears = Math.floor(myExpMonth / 12);
+            myExpMonth = myExpMonth - myExpYears * 12;
+
+            $('#myExpirience').text(myExpYears + 'y, ' + myExpMonth+'m');
         });
 
 
@@ -82,13 +89,13 @@
                 });
             };
 
-            RunMatrix();
+           
             function RunMatrix() {
                 if (typeof Game_Interval != "undefined") clearInterval(Game_Interval);
                 Game_Interval = setInterval(draw, 60);
             }
 
-
+            RunMatrix();
             var yPositionsBck = Array(300).join(0).split('');
             var ctxBck = qBck.getContext('2d');
             var opBck = Math.random() * (0.1 - 0.05) + 0.05;
@@ -110,12 +117,13 @@
                     }
                 });
             };
-
-            RunMatrixBck();
             function RunMatrixBck() {
                 if (typeof Game_IntervalBck != "undefined") clearInterval(Game_IntervalBck);
                 Game_IntervalBck = setInterval(drawBck, 120);
             }
+
+            RunMatrixBck();
+            
 
             showFirstPage();
             theRotator();
@@ -723,7 +731,7 @@
                     <table class="infoTable">
                         <tr>
                             <td>Age:</td>
-                            <td>23</td>
+                            <td><span id="myAge"></span></td>
                         </tr>
                         <tr>
                             <td>Sex:</td>
@@ -740,6 +748,10 @@
                         <tr>
                             <td>Level:</td>
                             <td>Junior</td>
+                        </tr>
+                        <tr>
+                            <td>Exp:</td>
+                            <td><span id="myExpirience"></span></td>
                         </tr>
                         <tr>
                             <td>Company:</td>
